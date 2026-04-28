@@ -3,7 +3,7 @@ let grid = [
   ["", "", ""],
   ["", "", ""]
 ]
-//puissance 4
+
 const gridp4 = [
   ["", "", "", "", "", "", ""],
   ["", "", "", "", "", "", ""],
@@ -11,8 +11,8 @@ const gridp4 = [
   ["", "", "", "", "", "", ""],
   ["", "", "", "", "", "", ""],
   ["", "", "", "", "", "", ""]
-
 ]
+
 const zone = document.querySelector('#zonedejeu')
 let tour = 0
 let nbrplayer = 0
@@ -20,8 +20,8 @@ let nbrplayer = 0
 function randomize(min, max) {
   return Math.round(Math.random() * (max - min) + min)
 }
-function victoire() {
 
+function victoire() {
   const img = document.createElement('img')
   img.classList = "imgvictoire"
   img.src = "./assets/images/victoire.png"
@@ -40,16 +40,15 @@ function victoire() {
     menu()
   })
 }
+
 function menu() {
   zone.innerHTML = ""
 
-  //img morpion
   const img = document.createElement('img')
   img.classList = "imgvictoire"
   img.src = "./assets/images/morpionv2.png"
   zone.appendChild(img)
 
-  //btn morpion
   const btnzone = document.createElement('div')
   btnzone.classList = 'btndiv'
   zone.appendChild(btnzone)
@@ -72,11 +71,8 @@ function menu() {
       ["", "", ""],
       ["", "", ""]
     ]
-
     tour = 0
-
     party()
-
   })
 
   btn1player.addEventListener('click', function () {
@@ -87,16 +83,15 @@ function menu() {
       ["", "", ""],
       ["", "", ""]
     ]
-
     tour = 0
     party()
   })
-  //img puissance 4
+
   const img2 = document.createElement('img')
   img2.classList = "imgp4"
   img2.src = "./assets/images/puissance4.png"
   zone.appendChild(img2)
-  //btn puissance 4
+
   const btnzone2 = document.createElement('div')
   btnzone2.classList = 'btndiv2'
   zone.appendChild(btnzone2)
@@ -109,7 +104,6 @@ function menu() {
   btnjcjp4.addEventListener('click', function () {
     zone.innerHTML = ""
     partyp4()
-
     tour = 0
     const gridp4 = [
       ["", "", "", "", "", "", ""],
@@ -118,12 +112,11 @@ function menu() {
       ["", "", "", "", "", "", ""],
       ["", "", "", "", "", "", ""],
       ["", "", "", "", "", "", ""]
-
     ]
   })
-
 }
-//morpion
+
+// ── MORPION ──────────────────────────────────────────────
 function party() {
   zone.innerHTML = ""
 
@@ -147,39 +140,37 @@ function party() {
           break
       }
 
+      // ✅ CORRECTION : suppression de nbrplayer = 2
       img.addEventListener('click', function () {
         choice(i, j)
-        nbrplayer = 2
       })
+
       div.appendChild(img)
     })
   })
-
 }
-//choix
-function choice(i, j) {
 
+function choice(i, j) {
   if (grid[i][j] !== "") return
 
   if (nbrplayer === 1) {
-
     grid[i][j] = "x"
+    tour++ // ✅ CORRECTION : incrémentation du tour en mode 1 joueur
 
     if (checkWin()) {
       party()
       victoire()
       return
     }
-    if (tour == 9) {
+
+    if (tour >= 9) {
+      party()
       return matchnul()
     }
 
     choicecpu()
 
-  }
-
-  else if (nbrplayer === 2) {
-
+  } else if (nbrplayer === 2) {
     if (tour % 2 === 0) {
       grid[i][j] = "x"
     } else {
@@ -194,25 +185,30 @@ function choice(i, j) {
 
     tour++
     party()
-  }
 
-  if (tour == 9) {
-    return matchnul()
+    if (tour >= 9) {
+      return matchnul()
+    }
   }
 }
-//choix cpu
-function choicecpu() {
 
+function choicecpu() {
   let i = randomize(0, 2)
   let j = randomize(0, 2)
 
   if (grid[i][j] === "") {
-
     grid[i][j] = "o"
+    tour++ // ✅ CORRECTION : incrémentation du tour après le coup du CPU
 
     if (checkWin()) {
+      party()
       victoire()
       return
+    }
+
+    if (tour >= 9) {
+      party()
+      return matchnul()
     }
 
     party()
@@ -220,7 +216,6 @@ function choicecpu() {
   } else {
     choicecpu()
   }
-
 }
 
 function checkWin() {
@@ -230,7 +225,6 @@ function checkWin() {
     }
     if (grid[0][i] != "" && grid[0][i] == grid[1][i] && grid[1][i] == grid[2][i]) {
       return true
-
     }
   }
   if (grid[0][0] != "" && grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2]) {
@@ -255,7 +249,6 @@ function matchnul() {
   btnreturn.addEventListener('click', function () {
     menu()
   })
-
 }
 
 
