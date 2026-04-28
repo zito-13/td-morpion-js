@@ -4,7 +4,7 @@
 }
 
 header {
-    background-image: url(/assets/images/bois.webp);
+    background-image: url(../../assets/images/bois.webp);
     height: 11vh;
     background-size: contain;
     display: flex;
@@ -18,7 +18,7 @@ main {
     align-items: center;
     justify-content: center;
     height: 88vh;
-    background-image: url(/assets/images/iExvJxJe-fond-decran-Minecraft-55.webp);
+    background-image: url(../../assets/images/iExvJxJe-fond-decran-Minecraft-55.webp);
     background-size: cover;
 
     .ligne {
